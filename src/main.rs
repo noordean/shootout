@@ -6,8 +6,12 @@ struct State {
 
 impl ggez::event::EventHandler for State {
   fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
-    // don't move yet
-    // self.pos_x = self.pos_x % 800.0 + 1.0;
+    if input::keyboard::is_key_pressed(ctx, event::KeyCode::Right) {
+      self.pos_x = self.pos_x % 800.0 + 1.0;
+    } else if input::keyboard::is_key_pressed(ctx, event::KeyCode::Left) {
+      self.pos_x = self.pos_x % 800.0 - 1.0;
+    }
+
     Ok(())
   }
 
@@ -35,7 +39,7 @@ fn main() {
   let state = &mut State { pos_x: 300.0 };
 
   let c = conf::Conf::new();
-  let (ref mut ctx, ref mut event_loop) = ContextBuilder::new("hello_ggez", "awesome_person")
+  let (ref mut ctx, ref mut event_loop) = ContextBuilder::new("Shootout", "Awesome Game")
       .conf(c)
       .build()
       .unwrap();
